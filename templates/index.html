@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <style type="text/css">
+            table {
+                border-collapse: collapse;
+            }
+
+            td, tr {
+                border: 1px solid rgb(180, 180, 180);
+            }
+
+            td {
+                padding: 12px;
+                align-items: center;
+                vertical-align: middle;
+            }
+
+            tr:nth-child(even) {
+                background-color: rgb(220, 220, 220);
+            }
+
+            .weather-description {
+                color: rgb(128, 128, 128);
+                font-style: italic;
+            }
+        </style>
+    </head>
+    <body>
+        <form method="get">
+            <input name="cityName" type="text" placeholder="Insert the desired city name">
+            <input type="submit">
+        </form>
+        {% if forecastData | length > 0 %}
+            <h1>Weather forecast for {{ cityName }}</h1>
+            <table>
+
+                {% for weatherForecast in forecastData %}
+                    <tr>
+                        <td>
+                            {{ weatherForecast.date }}
+                        </td>
+                        <td>
+                            {{ weatherForecast.temp }} °C
+                            <br>
+                            <span class="weather-description">{{ weatherForecast.description }}</span>
+                        </td>
+                        <td>
+                            <img src="http://openweathermap.org/img/w/{{ weatherForecast.icon }}.png" alt="Image">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% elif cityName %}
+            <p>The city {{ cityName }} was not found in the database. Notice that only cities from Brazil are accepted. Please, try again.</p>
+        {% endif %}
+    </body>
+</html>
